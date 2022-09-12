@@ -3,23 +3,39 @@
 #include <string>
 using namespace std;
 
-Money::Money(long h, unsigned short k, double n) //	Ініціалізатор
+Money::Money(long h, unsigned short k)	//	Введення значень (вручну)
 {
 	hrn = h;
 	kop = k;
-	num = n;
+	cout << "\nГрн: " << h << endl;
+	cout << "Коп: " << k << endl;
+	if (k >= 100) {
+		while (k >= 100) {
+			k -= 100;
+			h++;
+		}
+	}
 }
 
-Money::Money()	//	Зчитування (аналог методу Read)
+Money::Money()	//	Конструктор по замовченню
+{
+	hrn = 0;
+	kop = 0;
+}
+
+Money Money::Read()
 {
 	cout << "\nГрн: ";
-	cin >> hrn;
+	cin >> this->hrn;
 	cout << "Коп: ";
-	cin >> kop;
-	cout << "Число: ";
-	cin >> num;
-	if (kop >= 100)
-		cout << "Помилка - копійок не може бути більше 99" << endl;
+	cin >> this->kop;
+	if (this->kop >= 100) {
+		while (this->kop >= 100) {
+			this->kop -= 100;
+			this->hrn++;
+		}
+	}
+	else return *this;
 }
 
 string Money::toString()
@@ -30,53 +46,63 @@ string Money::toString()
 
 Money Money::operator+(Money obj)
 {
-	Money tmp(0, 0, 0);
+	Money tmp;
 	tmp.hrn = hrn + obj.hrn;
 	tmp.kop = kop + obj.kop;
-	cout << "\nСума гривень і копійок об'єктів класу: " << tmp.hrn << "." << tmp.kop;
+	while (tmp.kop >= 100) {
+		tmp.kop -= 100;
+		tmp.hrn++;
+	}
+	cout << "\nСума: " << tmp.hrn << "." << tmp.kop << endl;
+
 	return tmp;
 }
 
 Money Money::operator-(Money obj)
 {
-	Money tmp(0, 0, 0);
+	Money tmp;
 	tmp.hrn = hrn - obj.hrn;
 	tmp.kop = kop - obj.kop;
-	cout << "\nРізниця гривень і копійок об'єктів класу: " << tmp.hrn << "." << tmp.kop;
+	cout << "\nРізниця: " << tmp.hrn << "." << tmp.kop << endl;
+
+	return tmp;
+}
+
+Money Money::operator*(Money obj)
+{
+	Money tmp;
+	tmp.hrn = hrn * obj.hrn;
+	tmp.kop = kop * obj.kop;
+	cout << "\nМноження: " << tmp.hrn << "." << tmp.kop << endl;
+
+	return tmp;
+}
+
+Money Money::operator/(Money obj)
+{
+	Money tmp;
+	if (obj.kop != 0 || obj.hrn != 0) {
+		tmp.hrn = hrn / obj.hrn;
+		tmp.kop = kop / obj.kop;
+	}
+	cout << "\nДілення: " << tmp.hrn << "." << tmp.kop << endl;
+
 	return tmp;
 }
 
 void Money::Display()
 {
 	cout << "\nВведено: " << toString() << " грн." << endl;
-	double s = stod(toString());	//	Перетворюємо рядок у числовий тип double
-	double sum = s + num;
-	double minus = s - num;
-	double mn = s * num;
-	bool equal = s == num;	//	Операція порівняння
-	cout << endl;
-	if (num != 0) {	//	Перерівка ділення на 0
-		double dil = s / num;
-		cout << "Ділення: " << dil << endl;
-	}
-	else cout << "Ділення на 0 неможливе!" << endl;
-
-	cout << "Сума: " << sum << endl;
-	cout << "Різниця: " << minus << endl;
-	cout << "Множення: " << mn << endl;
-	cout << "Порівняння: ";
-	if (equal == 1) cout << s << " == " << num << endl;	//	Порівняння двох чисел
-	else cout << s << " != " << num << endl;
 }
 
 bool operator==(Money obj1, Money obj2)
 {
 	if (obj1.hrn == obj2.hrn && obj1.kop == obj2.kop) {
-		cout << "\nОб'єкти рівні один між одним (грн == коп)" << endl;
+		cout << "\nПорівняння: " << obj1.hrn << "." << obj1.kop << " дорівнює " << obj2.hrn << "." << obj2.kop << endl;
 		return true;
 	}
-	else { 
-		cout << "\nОб'єкти не рівні один між одним (грн != коп)" << endl;
-		return false; 
+	else {
+		cout << "\nПорівняння: " << obj1.hrn << "." << obj1.kop << " не дорівнює " << obj2.hrn << "." << obj2.kop << endl;
+		return false;
 	}
 }

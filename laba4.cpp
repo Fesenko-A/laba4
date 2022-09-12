@@ -15,19 +15,24 @@ using namespace std;
 
 int main()
 {
-    SetConsoleCP(1251);
-    SetConsoleOutputCP(1251);
-    Money test1;
-    test1.toString();
-    test1.Display();
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
 
-    Money test2;
-    test2.toString();
-    test2.Display();
+	Money test1;
+	test1.Read();
+	test1.toString();
+	test1.Display();
 
-    test1 + test2;
-    test2 - test1;
-    test1 == test2;
+	Money test2;
+	test2.Read();
+	test2.toString();
+	test2.Display();
 
-    return 0;
+	test1 + test2;
+	test1 - test2;
+	test1 * test2;
+	test1 / test2;
+	test1 == test2;
+
+	return 0;
 }
