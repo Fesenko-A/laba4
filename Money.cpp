@@ -58,42 +58,47 @@ Money Money::operator+(Money obj)
 	return tmp;
 }
 
-Money Money::operator-(Money obj)
-{
-	Money tmp;
-	tmp.hrn = hrn - obj.hrn;
-	tmp.kop = kop - obj.kop;
-	cout << "\nРізниця: " << tmp.hrn << "." << tmp.kop << endl;
-
-	return tmp;
-}
-
-Money Money::operator*(Money obj)
-{
-	Money tmp;
-	tmp.hrn = hrn * obj.hrn;
-	tmp.kop = kop * obj.kop;
-	cout << "\nМноження: " << tmp.hrn << "." << tmp.kop << endl;
-
-	return tmp;
-}
-
-Money Money::operator/(Money obj)
-{
-	Money tmp;
-	if (obj.kop != 0 || obj.hrn != 0) {
-		tmp.hrn = hrn / obj.hrn;
-		tmp.kop = kop / obj.kop;
-	}
-	cout << "\nДілення: " << tmp.hrn << "." << tmp.kop << endl;
-
-	return tmp;
-}
-
 void Money::Display()
 {
 	cout << "\nВведено: " << toString() << " грн." << endl;
 }
+
+double operator-(Money obj1, Money obj2)
+{
+	string a = to_string(obj1.hrn) + "." + to_string(obj1.kop);
+	string b = to_string(obj2.hrn) + "." + to_string(obj2.kop);
+	double c = stod(a);
+	double d = stod(b);
+	cout << "\nРізниця: " << c - d << " грн." << endl;
+	return c - d;
+}
+
+double operator*(Money obj1, Money obj2)
+{
+	string a = to_string(obj1.hrn) + "." + to_string(obj1.kop);
+	string b = to_string(obj2.hrn) + "." + to_string(obj2.kop);
+	double c = stod(a);
+	double d = stod(b);
+	cout << "\nМноження: " << c * d << " грн." << endl;
+	return c * d;
+}
+
+double operator/(Money obj1, Money obj2)
+{
+	string a = to_string(obj1.hrn) + "." + to_string(obj1.kop);
+	string b = to_string(obj2.hrn) + "." + to_string(obj2.kop);
+	double c = stod(a);
+	double d = stod(b);
+	if (d != 0) {
+		cout << "\nДілення: " << c / d << " грн." << endl;
+		return c / d;
+	}
+	else {
+		cout << "\nДілення на 0 неможливе." << endl;
+		return -1;
+	}
+}
+
 
 bool operator==(Money obj1, Money obj2)
 {

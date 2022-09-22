@@ -13,8 +13,8 @@ public:
 	void Display();
 	string toString();	//	Перетворення на рядок
 	Money operator+(Money obj);
-	Money operator-(Money obj);
-	Money operator*(Money obj);
-	Money operator/(Money obj);
+	friend double operator-(Money obj1, Money obj2);
+	friend double operator*(Money obj1, Money obj2);
+	friend double operator/(Money obj1, Money obj2);
 	friend bool operator==(Money obj1, Money obj2);
 };
